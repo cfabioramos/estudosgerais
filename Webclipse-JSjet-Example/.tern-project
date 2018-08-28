@@ -1,0 +1,19 @@
+{
+  "ecmaVersion": 6,
+  "plugins": {
+    "guess-types": {
+      
+    },
+    "jshint": {
+      "config": {
+        "esversion": 6,
+        "maxerr": 50
+      }
+    }
+  },
+  "libs": [
+    "ecma5",
+    "browser",
+    "jquery"
+  ]
+}
