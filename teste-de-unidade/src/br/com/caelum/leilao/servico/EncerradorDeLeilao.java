@@ -8,22 +8,29 @@ import br.com.caelum.leilao.infra.dao.LeilaoDao;
 
 public class EncerradorDeLeilao {
 	
-	private LeilaoDao dao;
-	
-	public EncerradorDeLeilao(LeilaoDao dao){
-		this.dao = dao;
-	}
-
 	private int total = 0;
+	private LeilaoDao dao;
+	private final EnviadorDeEmail carteiro;
+	
+	public EncerradorDeLeilao(LeilaoDao dao, EnviadorDeEmail carteiro) {
+        this.dao = dao;
+        this.carteiro = carteiro;
+    }
 
 	public void encerra() {
 		List<Leilao> todosLeiloesCorrentes = dao.correntes();
 
 		for (Leilao leilao : todosLeiloesCorrentes) {
-			if (comecouSemanaPassada(leilao)) {
-				leilao.encerra();
-				total++;
-				dao.atualiza(leilao);
+			try {
+				if (comecouSemanaPassada(leilao)) {
+					leilao.encerra();
+					total++;
+					dao.atualiza(leilao);
+					carteiro.envia(leilao);
+				}
+			}
+			catch(Exception e) {
+				// Trata a exceção mas continua o processamento...
 			}
 		}
 	}
