@@ -1,0 +1,31 @@
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-employee-list',
+  template: 
+  `
+   <h2>Employee List</h2>
+    <table border="1">
+      <tr *ngFor="let employee of employees">
+        <td>{{employee.name}}</td>
+        <td>{{employee.age}}</td>
+      </tr>
+    </table>
+   `,
+  styles: []
+})
+export class EmployeeListComponent implements OnInit {
+
+  public employees = [
+    {'id': 1, 'name': 'Fábio', 'age' : 30},
+    {'id': 2, 'name': 'Jão', 'age' : 25},
+    {'id': 3, 'name': 'Jana', 'age' : 26},
+    {'id': 4, 'name': 'Pedro', 'age' : 28}
+  ];
+  
+  constructor() { }
+
+  ngOnInit() {
+  }
+
+}

@@ -1,0 +1,32 @@
+import { IEmployee } from './employee';
+import { HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable, EMPTY, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class EmployeeService {
+  
+  private _url: string = 'kjasdhj/assets/data/employees.json';
+
+  constructor(private http: HttpClient) { }
+  
+  getEmployees(): Observable<IEmployee[]>{
+    return this.http.get<IEmployee[]>(this._url)
+      .pipe(catchError(this.errorHandler));
+  }
+  
+  errorHandler(error: HttpErrorResponse) {
+    if (error.status == 401) {
+//    this.router.navigateByUrl('/login');
+      return EMPTY;
+    } else {
+      return throwError(error.message);
+//    return Observable.throw(error.message || "Server Error");
+    }
+  }
+  
+}

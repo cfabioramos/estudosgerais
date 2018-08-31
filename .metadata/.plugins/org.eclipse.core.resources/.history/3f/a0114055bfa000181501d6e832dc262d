@@ -1,0 +1,28 @@
+import java.io.File;
+import java.nio.file.Files;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Scanner;
+
+public class Solution {
+    private static final Scanner scan = new Scanner(System.in);
+    
+    public static void main(String args[]) throws Exception {
+        // read the string filename
+        String filename;
+        filename = scan.nextLine();
+        while(scan.hasNextLine()) {
+            
+        }
+        
+        Map<String, Integer> results = new HashMap();
+        
+        Files.write((new File("name")).getPath(), "".getBytes());
+        
+        for( Entry<String, Integer> entry : results.entrySet() ) {
+        	String line = entry.getKey() + " " + entry.getValue();
+        	
+        }
+    }
+}

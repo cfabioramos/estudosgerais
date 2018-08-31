@@ -1,0 +1,43 @@
+import java.io.File;
+import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Scanner;
+public class Solution {
+    private static final Scanner scan = new Scanner(System.in);
+    
+    public static void main(String args[]) throws Exception {
+        // read the string filename
+        String filename;
+        filename = scan.nextLine();
+        Map<String, Integer> results = new HashMap();
+        while(scan.hasNextLine()) {
+            String hostName = scan.nextLine().split(" ")[0];
+            
+            Integer amount = results.get(hostName);
+            if(amount == null) {
+                results.put(hostName, 1);
+            }
+            else {
+                results.put(hostName, ++amount);
+            }
+        }
+        
+        List<String> lines = new ArrayList();
+        File file = new File("records_" + filename);
+        if (!file.createNewFile()){
+            throw new RuntimeException("Erro na criação do arquivo.");
+        }
+        FileWriter writer = new FileWriter(file);
+        
+        for (Entry<String, Integer> entry : results.entrySet() ) {
+            String line = entry.getKey() + " " + entry.getValue();
+            writer.write(line);
+            lines.add(line);
+        }
+        
+    }
+}

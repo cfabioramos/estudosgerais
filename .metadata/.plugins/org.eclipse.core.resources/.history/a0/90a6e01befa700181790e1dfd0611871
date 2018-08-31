@@ -1,0 +1,30 @@
+import { EmployeeService } from '../employee.service';
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-employee-detail',
+  template: 
+  `
+    <table border="1">
+      <tr><td colspan="3">Employee Details</td></tr>
+      <tr *ngFor="let employee of employees">
+        <td>{{employee.id}}</td>
+        <td>{{employee.name}}</td>
+        <td>{{employee.age}}</td>
+      </tr>
+    </table>
+   `,
+  styles: []
+})
+export class EmployeeDetailComponent implements OnInit {
+  
+  public employees = [];
+
+  constructor(private _employeeService: EmployeeService) { }
+
+  ngOnInit() {
+    this._employeeService.getEmployees()
+      .subscribe(data => this.employees = data);
+  }
+
+}

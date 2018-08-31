@@ -1,0 +1,6 @@
+ng g c teste
+ng g c employee-list
+ng g s employee
+ng g c employee-detail
+cd ..
+ng new routing-demo --routing

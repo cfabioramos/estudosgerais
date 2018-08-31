@@ -1,0 +1,7 @@
+ng g c department-list -it -is
+ng g c employee-list -it -is
+ng g c page-notfound -it -is
+ng g c page-not-found -it -is
+ng g c department-detail -it -is
+ng g c department-overview -it -is
+ng g c department-contact -it -is
