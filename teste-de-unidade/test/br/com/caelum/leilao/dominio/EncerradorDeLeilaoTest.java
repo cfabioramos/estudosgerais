@@ -153,13 +153,19 @@ public class EncerradorDeLeilaoTest {
         
         doThrow(new RuntimeException()).when(daoFalso).atualiza(leilao1);
 
+        // caso o erro deva ser lançado para qualquer leilão        
+        // doThrow(new RuntimeException()).when(daoFalso).atualiza(org.mockito.Matchers.any(Leilao.class));
+
         EncerradorDeLeilao encerrador = new EncerradorDeLeilao(daoFalso, carteiroFalso);
         encerrador.encerra();
 
         verify(daoFalso).atualiza(leilao2);
         verify(carteiroFalso).envia(leilao2);
+        // No caso do erro ser lançado para qualquer leilão, essa seria a verificação;
+        // verify(carteiroFalso, never()).envia(org.mockito.Matchers.any(Leilao.class));
         
-        verify(carteiroFalso, times(0)).envia(leilao1);
+        // verify(carteiroFalso, times(0)).envia(leilao1);
+        verify(carteiroFalso, never()).envia(leilao1);
         
     }
 
