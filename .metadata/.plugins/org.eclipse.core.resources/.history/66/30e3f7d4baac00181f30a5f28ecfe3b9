@@ -74,7 +74,7 @@ public class EncerradorDeLeilaoTest {
     public void naoDeveEncerrarLeiloesQueComecaramMenosDeUmaSemanaAtras() {
 
         Calendar ontem = Calendar.getInstance();
-        ontem.add(Calendar.DAY_OF_MONTH, -1);
+        ontem.set(Calendar.DAY_OF_MONTH, -1);
 
         Leilao leilao1 = new CriadorDeLeilao().para("TV de plasma")
             .naData(ontem).constroi();

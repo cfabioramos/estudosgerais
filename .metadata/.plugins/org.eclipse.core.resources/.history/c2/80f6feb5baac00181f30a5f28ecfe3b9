@@ -30,7 +30,7 @@ public class EncerradorDeLeilao {
 				}
 			}
 			catch(Exception e) {
-				// Trata a excecao mas deve continuar o processamento...
+				// Trata a exce��o mas continua o processamento...
 			}
 		}
 	}
