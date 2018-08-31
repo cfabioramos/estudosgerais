@@ -16,6 +16,11 @@ public class EncerradorDeLeilao {
         this.dao = dao;
         this.carteiro = carteiro;
     }
+	private final LeilaoDao dao;
+
+	public EncerradorDeLeilao(LeilaoDao dao) {
+        this.dao = dao;
+    }
 
 	public void encerra() {
 		List<Leilao> todosLeiloesCorrentes = dao.correntes();
@@ -30,7 +35,7 @@ public class EncerradorDeLeilao {
 				}
 			}
 			catch(Exception e) {
-				// Trata a exceï¿½ï¿½o mas continua o processamento...
+				// Trata a exceção mas continua o processamento...
 			}
 		}
 	}

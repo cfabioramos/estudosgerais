@@ -3,13 +3,13 @@ package br.com.caelum.leilao.dominio;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.doThrow;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,7 +43,7 @@ public class EncerradorDeLeilaoTest {
         // ensinamos ele a retornar a lista de leiloes antigos
         when(daoFalso.correntes()).thenReturn(leiloesAntigos);
         
-        //Mock da interface que nï¿½o tem nenhuma implementaï¿½ï¿½o
+        //Mock da interface que não tem nenhuma implementação
         EnviadorDeEmail carteiroFalso = mock(EnviadorDeEmail.class);
         
         EncerradorDeLeilao encerrador = new EncerradorDeLeilao(daoFalso, carteiroFalso);
@@ -56,20 +56,20 @@ public class EncerradorDeLeilaoTest {
         verify(daoFalso, times(1)).atualiza(leilao1);
         // Ainda podemos passar atLeastOnce(), atLeast(numero) e atMost(numero) para o verify()
         
-        // verificando que o metodo atualiza nï¿½o foi invocado!
+        // verificando que o metodo atualiza não foi invocado!
         // verify(daoFalso, never()).atualiza(leilao1);
         
-        //TODO entender melhor o inOrder. porque eu troquei a ordem, mas nï¿½o sei se funfou.
+        //TODO entender melhor o inOrder. porque eu troquei a ordem, mas não sei se funfou.
         // Passamos os mocks que serao verificados.
         InOrder inOrder = inOrder(daoFalso, carteiroFalso);
-        // a primeira invocaï¿½ï¿½o
+        // a primeira invocação
         inOrder.verify(daoFalso, times(1)).atualiza(leilao1);    
-        // a segunda invocaï¿½ï¿½o
+        // a segunda invocação
         inOrder.verify(carteiroFalso, times(1)).envia(leilao1);
         
     }
 	
-	//TODO Entender porque esse teste estï¿½ falhando.
+	//TODO Entender porque esse teste está falhando.
 	@Test
     public void naoDeveEncerrarLeiloesQueComecaramMenosDeUmaSemanaAtras() {
 
@@ -162,5 +162,53 @@ public class EncerradorDeLeilaoTest {
         verify(carteiroFalso, times(0)).envia(leilao1);
         
     }
+
+
+}
+package br.com.caelum.leilao.dominio;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.List;
+
+import org.junit.Test;
+
+import br.com.caelum.leilao.builder.CriadorDeLeilao;
+import br.com.caelum.leilao.infra.dao.LeilaoDao;
+import br.com.caelum.leilao.servico.EncerradorDeLeilao;
+
+public class EncerradorDeLeilaoTest {
+
+	@Test
+    public void deveEncerrarLeiloesQueComecaramUmaSemanaAtras() {
+		
+        Calendar antiga = Calendar.getInstance();
+        antiga.set(1999, 1, 20);
+
+        Leilao leilao1 = new CriadorDeLeilao().para("TV de plasma")
+            .naData(antiga).constroi();
+        Leilao leilao2 = new CriadorDeLeilao().para("Geladeira")
+            .naData(antiga).constroi();
+
+        List<Leilao> leiloesAntigos = Arrays.asList(leilao1, leilao2);
+
+        // criando o mock!
+        LeilaoDao daoMock = mock(LeilaoDao.class);
+        // ensinando o mock a reagir da maneira que esperamos!
+        when(daoMock.correntes()).thenReturn(leiloesAntigos);
+
+        EncerradorDeLeilao encerrador = new EncerradorDeLeilao(daoMock);
+        encerrador.encerra();
+
+        assertEquals(2, encerrador.getTotalEncerrados());
+        assertTrue(leilao1.isEncerrado());
+        assertTrue(leilao2.isEncerrado());
+    }
+	
 
 }
