@@ -1,0 +1,11 @@
+<h2>
+	Child Component
+</h2>
+
+<p *ngIf="loggedIn">Welcome back! ({{mensagem}})</p>
+<p *ngIf="!loggedIn">Please, log in. ({{mensagem}})</p>
+
+{{mensagemDoPai}}
+
+<br>
+<button (click)="callParentGreet()">Manda mensagem para o pai.</button>
