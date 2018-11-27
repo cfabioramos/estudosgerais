@@ -1,0 +1,35 @@
+<h1>Parent Component</h1>
+<div>
+	<button (click)="userLoggedIn=true">Login</button> &nbsp;
+	<button (click)="userLoggedIn=false">Logout</button>
+	{{userLoggedIn}}
+</div>
+<app-child #child [loggedIn]="userLoggedIn" [autenticado]="userLoggedIn" (greetEvent)="greetFromChilds($event)"></app-child>
+<br>
+{{child.name}}
+<br><button (click)="child.greetFabio()">Greet</button>
+
+<h1>{{pageTitle}}</h1>
+<div>
+	<img alt="Image" [src]="imgUrl">
+</div>
+
+<div>
+	<button (click)="incrementCount()">Click</button>
+	<p>Clicked {{count}} times</p>
+</div>
+
+<div>
+	<input #nameRef type="text" [(ngModel)]="name">
+	<p>Welcome {{name}}</p>
+</div>
+
+<div>
+	<input type="text" [ngModel]="userName" (ngModelChange)="greetVishwas($event)">
+	<p>Welcome {{userName}}</p>
+</div>
+
+<div>
+	<input type="text" [(ngModel)]="customerName">
+	<p>Welcome {{customerName}}</p>
+</div>

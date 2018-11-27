@@ -1,0 +1,51 @@
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router, ParamMap } from '@angular/router';
+
+@Component({
+  selector: 'app-department-detail',
+  template: `
+    <h3>You selected department with id = {{departmentId}}</h3>
+    <a (click) = "goPrevious()">Previous</a> &nbsp;
+    <a (click) = "goNext()">Next</a>
+    <div>
+      <button (click)="gotoDepartments()>Back</button>
+    </div>
+  `,
+  styles: []
+})
+export class DepartmentDetailComponent implements OnInit {
+  
+  private departmentId;
+
+  constructor(private _activatedRoute: ActivatedRoute, private _router: Router) { }
+
+  ngOnInit() {
+//      let id = parseInt(this._activatedRoute.snapshot.paramMap.get('id'));
+//      this.departmentId = id;
+        this._activatedRoute.paramMap.subscribe((params: ParamMap) => {
+          let id = parseInt(params.get('id'));
+          this.departmentId = id;
+        });
+  }
+  
+  goPrevious() {
+    let previousId = this.departmentId - 1;
+    this._router.navigate(['/departments', previousId]);
+    /*
+     * quando navega para o mesmo componente, Angular não o inicializa, mas reusa o que já está criado.
+     * Desta forma, o ngOnInit não é chamado. Por isso criei um Observable para escutar as mudanças do
+     * paramMap. 
+     */
+  }
+  
+  goNext() {
+    let nextId = this.departmentId + 1;
+    this._router.navigate(['/departments', nextId]);
+  }
+  
+  gotoDepartments() {
+    let selectedId = this.departmentId ? this.departmentId : null;
+    this._router.navigate(['/departments', {id: selectedId}]);
+  }
+
+}
