@@ -69,12 +69,11 @@ public class EncerradorDeLeilaoTest {
         
     }
 	
-	//TODO Entender porque esse teste está falhando.
 	@Test
     public void naoDeveEncerrarLeiloesQueComecaramMenosDeUmaSemanaAtras() {
 
         Calendar ontem = Calendar.getInstance();
-        ontem.set(Calendar.DAY_OF_MONTH, -1);
+        ontem.add(Calendar.DATE, -1);
 
         Leilao leilao1 = new CriadorDeLeilao().para("TV de plasma")
             .naData(ontem).constroi();
